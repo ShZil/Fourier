@@ -35,6 +35,18 @@ public class Graph {
     }
   }
 
+  public void add(Graph other) {
+    for (int i = 0; i < this.points.length; i++) {
+      this.points[i][1] += other.points[i][1];
+    }
+  }
+
+  public void mult(double factor) {
+    for (int i = 0; i < this.points.length; i++) {
+      this.points[i][1] *= factor;
+    }
+  }
+
   private int getX(int i) {
     return (int)(points[i][0] * 100);
   }

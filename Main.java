@@ -30,12 +30,17 @@ class Main extends Canvas {
 
   Dimension size;
   Graph graph;
+  Graph first;
   Graph second;
 
   public Main() {
     this.size = new Dimension(Main.sizeOfWindow, Main.sizeOfWindow);
-    this.graph = new Sin(10, 1, new Color(0f, 1f, 0f), this);
+    this.graph = new Sin(1, 1, new Color(0f, 1f, 0f), this);
+    this.first = new Sin(10, 1, new Color(0f, 0f, 1f), this);
     this.second = new Sin(4, 1, new Color(1f, 0f, 0f), this);
+    this.first.mult(0.3);
+    this.graph.add(first);
+    this.graph.add(second);
   }
 
   public static void main(String[] args) {
@@ -56,8 +61,9 @@ class Main extends Canvas {
 
   public void paint(Graphics g) {
     paintAxis(g);
+    // first.paint(g, false);
+    // second.paint(g, false);
     graph.paint(g, false);
-    second.paint(g, false);
   }
 
   public void mouseListener(int x, int y) {
