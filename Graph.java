@@ -1,9 +1,8 @@
 import java.awt.*;
-import java.util.Arrays;
 
 public class Graph {
   double[][] points;
-  int thickness = 15;
+  int thickness = 7;
   double[] params;
 
   private Color color;
@@ -47,11 +46,11 @@ public class Graph {
     }
   }
 
-  private int getX(int i) {
-    return (int)(points[i][0] * 100);
+  public int getX(int i) {
+    return (int)(points[i][0] * 50);
   }
 
-  private int getY(int i) {
-    return (int)(points[i][1] * 100 + 450);
+  public int getY(int i) {
+    return (int)(points[i][1] * 50 + 225);
   }
 }

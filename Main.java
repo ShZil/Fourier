@@ -32,15 +32,16 @@ class Main extends Canvas {
   Graph graph;
   Graph first;
   Graph second;
+  Graph feq;
 
   public Main() {
     this.size = new Dimension(Main.sizeOfWindow, Main.sizeOfWindow);
     this.graph = new Sin(1, 1, new Color(0f, 1f, 0f), this);
     this.first = new Sin(10, 1, new Color(0f, 0f, 1f), this);
     this.second = new Sin(4, 1, new Color(1f, 0f, 0f), this);
-    this.first.mult(0.3);
     this.graph.add(first);
     this.graph.add(second);
+    this.feq = new LowGraph(this.graph, this, new Color(1f, 1f, 0f));
   }
 
   public static void main(String[] args) {
@@ -49,6 +50,7 @@ class Main extends Canvas {
     f.getContentPane().setBackground(Main.bgColor);
     f.add(m);
     f.setSize(new Dimension(m.size.width, m.size.height));
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.setVisible(true);
     m.addMouseListener(new MouseAdapter() {
       @Override
@@ -61,9 +63,10 @@ class Main extends Canvas {
 
   public void paint(Graphics g) {
     paintAxis(g);
-    // first.paint(g, false);
-    // second.paint(g, false);
+    first.paint(g, false);
+    second.paint(g, false);
     graph.paint(g, false);
+    feq.paint(g, false);
   }
 
   public void mouseListener(int x, int y) {
