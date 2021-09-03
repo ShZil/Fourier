@@ -111,4 +111,41 @@ public class Graph {
         return (int)(points[i][1] * scl + this.y);
     }
 
+    public double value(double x) {
+        if (x < minx || x > maxx) return 0.0;
+        double left = maxx;
+        int lefti = -1;
+        double right = minx;
+        int righti = -1;
+        for (int i = 0; i < this.points.length; i++) {
+            double px = points[i][0];
+            if (left > px && px < x) {
+                left = px;
+                lefti = i;
+            }
+            if (right < px && px > x) {
+                right = px;
+                righti = i;
+            }
+        }
+        double y0 = points[lefti][1];
+        double y1 = points[righti][1];
+        double t = (x - left) / (right - left);
+        return (y0 * (1-t)) + (y1 * t);
+    }
+
+    private void maxes() {
+        minx = 10000;
+        miny = 10000;
+        maxx = -10000;
+        maxy = -10000;
+        for (int i = 0; i < this.points.length; i++) {
+            double x = points[i][0];
+            double y = points[i][1];
+            if (x < minx) minx = x;
+            if (y < miny) miny = y;
+            if (x > maxx) maxx = x;
+            if (y > maxy) maxy = x;
+        }
+    }
 }
