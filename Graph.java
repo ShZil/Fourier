@@ -97,6 +97,10 @@ public class Graph {
         }
     }
 
+    public void act(Graph other, BiFunction<Double, Double, Double> action) {
+        for (int i = 0; i < this.points.length; i++) {
+            this.points[i][1] = action.apply(this.points[i][1], other.points[i][1]);
+        }
     }
 
     public int getX(int i) {
