@@ -18,7 +18,12 @@ class Main extends Canvas {
     // This code mutates every parameter to minimize the cost,
     // but doesn't think about parameters affecting each other.
 
+    // 03.08.2021 21:00 - IDK WHY BUT I CANNOT FIND THE MUTATION AND APPROX PROCESS!!!
+    // So... i guess it's gone or in another project
 
+    // 04.08.2021 01:00 - Heyo I just thought, I could easily do reverse Fourier Transform (FT) by just summing sines.
+    // So I added a `double Graph.value(double x)`, which lerps closest points and gives `y` for input `x`.
+    // Future self, please do implement the reverse FT, should be ez. If you can do FT as well, gl!
 
     /* START of User-readable and changable code. */
     public static final int sizeOfWindow = 1000;
