@@ -108,7 +108,6 @@ class Main extends Canvas {
         colors[4] = new Color(255, 255, 0);
         titles[4] = "FT";
         // graphs[4] = new Linear(-0.5 + clicks / 200.0, 0.3, colors[4], this);
-        graphs[4] = FT(graphs[0]);
 
         // colors[5] = new Color(1f, 0f, 1f);
         // titles[5] = "0.1x² - x + 2";
@@ -117,6 +116,8 @@ class Main extends Canvas {
         graphs[0].add(graphs[1]);
         graphs[0].add(graphs[2]);
         graphs[0].add(graphs[3]);
+        
+        graphs[4] = FT(graphs[0]);
 
         // System.out.println(graphs[1].integral(0.2));
     }
@@ -135,8 +136,8 @@ class Main extends Canvas {
     public Graph FT(Graph input) {
         //  f(s) = 1/π ∫cos(sx)dx ∫f(y)cos(sy)dy
         //       + 1/π ∫sin(sx)dx ∫f(y)sin(sy)dy
-        double dx = 0.1;
-        double dy = 0.1;
+        double dx = 0.01;
+        double dy = 0.01;
         GraphBuilder gb = new GraphBuilder();
         for (double freqency = 0.1; freqency < 15.0; freqency += 0.1) {
             Graph cosine = new Cosine(freqency, 0, Color.BLACK, this);
@@ -147,7 +148,7 @@ class Main extends Canvas {
             double postcos = input.mult(cosine).integral(dy);
             double postsin = input.mult(sine).integral(dy);
 
-            gb.point(freqency, (precos * postcos + presin * postsin)/100);
+            gb.point(freqency, (precos * postcos + presin * postsin)/50);
         }
         return new Graph(gb.collapse(), this, new Color(255, 255, 0));
     }
