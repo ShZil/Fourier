@@ -136,6 +136,10 @@ class Main extends Canvas {
     public Graph FT(Graph input) {
         //  f(s) = 1/π ∫cos(sx)dx ∫f(y)cos(sy)dy
         //       + 1/π ∫sin(sx)dx ∫f(y)sin(sy)dy
+        // Doesn't workkkk
+        // And I don't wanna implement complex numbersss
+        // Isn't there a method to find only the real magnitudes??
+
         double dx = 0.05;
         double dy = 0.05;
         GraphBuilder gb = new GraphBuilder();
