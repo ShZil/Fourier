@@ -99,7 +99,7 @@ class Main extends Canvas {
         colors[2] = new Color(1f, 0f, 0f);
         titles[2] = "2sin(0.5x)";
         graphs[2] = new Sine(0.5, 0, colors[2], this, true);
-        graphs[2].mult(2.0);
+        graphs[2] = graphs[2].mult(2.0);
 
         colors[3] = new Color(0.8f, 0.8f, 0.8f);
         titles[3] = "sin(4x)";
@@ -147,7 +147,7 @@ class Main extends Canvas {
             double postcos = input.mult(cosine).integral(dy);
             double postsin = input.mult(sine).integral(dy);
 
-            gb.point(freqency, precos * postcos + presin * postsin);
+            gb.point(freqency, (precos * postcos + presin * postsin)/100);
         }
         return new Graph(gb.collapse(), this, new Color(255, 255, 0));
     }

@@ -91,10 +91,12 @@ public class Graph {
         }
     }
 
-    public void mult(double factor) {
+    public Graph mult(double factor) {
+        GraphBuilder gb = new GraphBuilder();
         for (int i = 0; i < this.points.length; i++) {
-            this.points[i][1] *= factor;
+            gb.point(this.points[i][0], this.points[i][1] * factor);
         }
+        return new Graph(gb.collapse(), null, this.color);
     }
 
     public Graph mult(Graph other) {
