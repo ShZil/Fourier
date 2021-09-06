@@ -137,8 +137,7 @@ class Main extends Canvas {
         //       + 1/π ∫sin(sx)dx ∫f(y)sin(sy)dy
         double dx = 0.1;
         double dy = 0.1;
-        GraphBuilder cosgb = new GraphBuilder();
-        GraphBuilder singb = new GraphBuilder();
+        GraphBuilder gb = new GraphBuilder();
         for (double freqency = 0.1; freqency < 15.0; freqency += 0.1) {
             Graph cosine = new Cosine(freqency, 0, Color.BLACK, this);
             Graph sine = new Sine(freqency, 0, Color.BLACK, this);
