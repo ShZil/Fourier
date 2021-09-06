@@ -116,7 +116,7 @@ class Main extends Canvas {
         graphs[0].add(graphs[1]);
         graphs[0].add(graphs[2]);
         graphs[0].add(graphs[3]);
-        
+
         graphs[4] = FT(graphs[0]);
 
         // System.out.println(graphs[1].integral(0.2));
@@ -136,8 +136,8 @@ class Main extends Canvas {
     public Graph FT(Graph input) {
         //  f(s) = 1/π ∫cos(sx)dx ∫f(y)cos(sy)dy
         //       + 1/π ∫sin(sx)dx ∫f(y)sin(sy)dy
-        double dx = 0.01;
-        double dy = 0.01;
+        double dx = 0.05;
+        double dy = 0.05;
         GraphBuilder gb = new GraphBuilder();
         for (double freqency = 0.1; freqency < 15.0; freqency += 0.1) {
             Graph cosine = new Cosine(freqency, 0, Color.BLACK, this);
