@@ -97,6 +97,14 @@ public class Graph {
         }
     }
 
+    public Graph mult(Graph other) {
+        GraphBuilder gb = new GraphBuilder();
+        for (int i = 0; i < this.points.length; i++) {
+            gb.point(this.points[i][0], this.points[i][1] * other.points[i][1]);
+        }
+        return new Graph(gb.collapse(), null, this.color);
+    }
+
     public void act(Graph other, BiFunction<Double, Double, Double> action) {
         for (int i = 0; i < this.points.length; i++) {
             this.points[i][1] = action.apply(this.points[i][1], other.points[i][1]);
@@ -114,9 +122,9 @@ public class Graph {
     public double value(double x) {
         if (x < minx || x > maxx) return 0.0;
         double left = maxx;
-        int lefti = -1;
+        int lefti = 0;
         double right = minx;
-        int righti = -1;
+        int righti = points.length - 1;
         for (int i = 0; i < this.points.length; i++) {
             double px = points[i][0];
             if (left > px && px < x) {
@@ -134,6 +142,10 @@ public class Graph {
         return (y0 * (1-t)) + (y1 * t);
     }
 
+    private double f(double x) {
+        return value(x);
+    }
+
     private void maxes() {
         minx = 10000;
         miny = 10000;
@@ -147,5 +159,19 @@ public class Graph {
             if (x > maxx) maxx = x;
             if (y > maxy) maxy = x;
         }
+    }
+
+    private double integral(double a, double b, double dx) {
+        // returns integral[a,b] f(x) dx
+        double sum = 0;
+        for (double x = a; x <= b; x += dx) {
+            sum += f(x) * dx;
+        }
+        return sum;
+    }
+
+    public double integral(double dx) {
+        if (dx <= 0) throw new IllegalArgumentException("double dx cannot be smaller than or equal to 0");
+        return integral(minx + dx, maxx - dx, dx);
     }
 }

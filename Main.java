@@ -43,7 +43,7 @@ class Main extends Canvas {
     int clicks = 0;
 
     public Main() {
-        this.graphs = new Graph[6];
+        this.graphs = new Graph[5];
         this.titles = new String[this.graphs.length];
         this.colors = new Color[this.graphs.length];
         this.checkboxes = new Checkbox[this.graphs.length];
@@ -89,27 +89,36 @@ class Main extends Canvas {
 
     public void init(Graph[] graphs, Color[] colors, String[] titles) {
         colors[0] = new Color(0f, 1f, 0f);
-        colors[1] = new Color(0f, 0f, 1f);
-        colors[2] = new Color(1f, 0f, 0f);
-        colors[3] = new Color(0.8f, 0.8f, 0.8f);
-        colors[4] = new Color(0.8f, 1f, 0.8f);
-        colors[5] = new Color(1f, 0f, 1f);
         titles[0] = "sin(10x) + sin(4x) + sin(x)";
+        graphs[0] = new Sine(1, 0, colors[0], this, 410);
+
+        colors[1] = new Color(0f, 0f, 1f);
         titles[1] = "sin(10x)";
-        titles[2] = "2sin(0.5x)";
-        titles[3] = "sin(4x)";
-        titles[4] = "-0.5x + 0.3";
-        titles[5] = "0.1x² - x + 2";
-        graphs[0] = new Sine(1, 0, colors[0], this);
         graphs[1] = new Sine(10, clicks / 2.0, colors[1], this, true);
+
+        colors[2] = new Color(1f, 0f, 0f);
+        titles[2] = "2sin(0.5x)";
         graphs[2] = new Sine(0.5, 0, colors[2], this, true);
         graphs[2].mult(2.0);
+
+        colors[3] = new Color(0.8f, 0.8f, 0.8f);
+        titles[3] = "sin(4x)";
         graphs[3] = new Sine(4, 0, colors[3], this, true);
+
+        colors[4] = new Color(255, 255, 0);
+        titles[4] = "FT";
+        // graphs[4] = new Linear(-0.5 + clicks / 200.0, 0.3, colors[4], this);
+        graphs[4] = FT(graphs[0]);
+
+        // colors[5] = new Color(1f, 0f, 1f);
+        // titles[5] = "0.1x² - x + 2";
+        // graphs[5] = new Parabola(0.1, -1, +2, colors[5], this, 410);
+
         graphs[0].add(graphs[1]);
         graphs[0].add(graphs[2]);
         graphs[0].add(graphs[3]);
-        graphs[4] = new Linear(-0.5 + clicks / 200.0, 0.3, colors[4], this, 410);
-        graphs[5] = new Parabola(0.1, -1, +2, colors[5], this, 410);
+
+        // System.out.println(graphs[1].integral(0.2));
     }
 
     public void mouseListener(int x, int y) {
@@ -121,5 +130,26 @@ class Main extends Canvas {
                 break;
             }
         }
+    }
+
+    public Graph FT(Graph input) {
+        //  f(s) = 1/π ∫cos(sx)dx ∫f(y)cos(sy)dy
+        //       + 1/π ∫sin(sx)dx ∫f(y)sin(sy)dy
+        double dx = 0.1;
+        double dy = 0.1;
+        GraphBuilder cosgb = new GraphBuilder();
+        GraphBuilder singb = new GraphBuilder();
+        for (double freqency = 0.1; freqency < 15.0; freqency += 0.1) {
+            Graph cosine = new Cosine(freqency, 0, Color.BLACK, this);
+            Graph sine = new Sine(freqency, 0, Color.BLACK, this);
+            double precos = cosine.integral(dx);
+            double presin = sine.integral(dx);
+
+            double postcos = input.mult(cosine).integral(dy);
+            double postsin = input.mult(sine).integral(dy);
+
+            gb.point(freqency, precos * postcos + presin * postsin);
+        }
+        return new Graph(gb.collapse(), this, new Color(255, 255, 0));
     }
 }

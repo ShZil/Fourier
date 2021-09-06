@@ -10,6 +10,10 @@ public class Sine extends Graph {
         super(Sine.points(t, s), m, c, dashed);
     }
 
+    public Sine(double t, double s, Color c, Main m, int off) {
+        super(Sine.points(t, s), m, c, off);
+    }
+
     private static double calc(double x, double t, double s) {
         return Math.sin(x * t + s);
     }
