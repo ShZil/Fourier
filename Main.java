@@ -140,20 +140,31 @@ class Main extends Canvas {
         // And I don't wanna implement complex numbersss
         // Isn't there a method to find only the real magnitudes??
 
-        double dx = 0.05;
-        double dy = 0.05;
+        // Well, I guess I gotta use the complex stuff...
+        // Formula:
+        /*
+        FT(z) = ∫  f(x)*exp(-2ixz) dx
+                   _____________________
+              =  /  (∫ f(x) cos(-2xz) dx)²
+               \/ - (∫ f(x) sin(-2xz) dx)²
+               [Derived by ShZil]
+        */
+        // Oh well, it's still a wave. WHYYYY
+        // I conclusively have no idea what's going on here.
+
+        double dx = 0.01;
         GraphBuilder gb = new GraphBuilder();
         for (double freqency = 0.1; freqency < 15.0; freqency += 0.1) {
-            Graph cosine = new Cosine(freqency, 0, Color.BLACK, this);
-            Graph sine = new Sine(freqency, 0, Color.BLACK, this);
-            double precos = cosine.integral(dx);
-            double presin = sine.integral(dx);
+            Graph cosine = new Cosine(-2 * Math.PI * freqency, 0, Color.BLACK, this);
+            Graph sine = new Sine(-2 * Math.PI * freqency, 0, Color.BLACK, this);
 
-            double postcos = input.mult(cosine).integral(dy);
-            double postsin = input.mult(sine).integral(dy);
+            double upper = input.mult(cosine).integral(dx);
+            upper *= upper;
+            double lower = input.mult(sine).integral(dx);
+            lower *= lower;
 
-            gb.point(freqency, (precos * postcos + presin * postsin)/50);
+            gb.point(freqency, upper - lower);
         }
-        return new Graph(gb.collapse(), this, new Color(255, 255, 0));
+        return new Graph(gb.collapse(), this, new Color(255, 255, 0)).mult(0.01);
     }
 }
